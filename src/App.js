@@ -56,8 +56,26 @@ export default function App() {
 
   return (
     <>
-      <Navbar movies={movies} />
-      <Main movies={movies} />
+      <Navbar>
+        <Search />
+        <NumResults movies={movies} />
+      </Navbar>
+      <Main>
+        <Listbox>
+          <MovieList movies={movies} />
+        </Listbox>
+        <WatchedBox />
+      </Main>
+    </>
+  );
+}
+function Navbar({ children }) {
+  return (
+    <>
+      <nav className="nav-bar">
+        <Logo />
+        {children}
+      </nav>
     </>
   );
 }
@@ -86,7 +104,7 @@ function Logo() {
   );
 }
 
-function NumResults({movies}) {
+function NumResults({ movies }) {
   return (
     <p className="num-results">
       Found <strong>{movies.length}</strong> results
@@ -94,28 +112,11 @@ function NumResults({movies}) {
   );
 }
 
-// Structural Component
-function Navbar({movies}) {
-  return (
-    <>
-      <nav className="nav-bar">
-        <Logo />
-        <Search />
-        <NumResults movies={movies} />
-      </nav>
-    </>
-  );
-}
-function Main({movies}) {
-  return (
-    <main className="main">
-      <Listbox movies={movies}/>
-      <WatchedBox />
-    </main>
-  );
+function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
 
-function Listbox({movies}) {
+function Listbox({ children }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -126,13 +127,12 @@ function Listbox({movies}) {
       >
         {isOpen1 ? "–" : "+"}
       </button>
-      {isOpen1 && <MovieList movies={movies} />}
+      {isOpen1 &&  children }
     </div>
   );
 }
 
-function MovieList({movies}) {
-
+function MovieList({ movies }) {
   return (
     <ul className="list">
       {movies?.map((movie) => (
@@ -179,7 +179,7 @@ function WatchedBox() {
   );
 }
 
-function WatchedSummary({watched}) {
+function WatchedSummary({ watched }) {
   const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
   const avgUserRating = average(watched.map((movie) => movie.userRating));
   const avgRuntime = average(watched.map((movie) => movie.runtime));
@@ -209,35 +209,35 @@ function WatchedSummary({watched}) {
   );
 }
 
-function WatchedMovieList({watched}){
-  return(
+function WatchedMovieList({ watched }) {
+  return (
     <ul className="list">
-    {watched.map((movie) => (
-      <WatchedMovie movie={movie} key={movie.imdbID} />
-    ))}
-  </ul>
-  )
+      {watched.map((movie) => (
+        <WatchedMovie movie={movie} key={movie.imdbID} />
+      ))}
+    </ul>
+  );
 }
 
-function WatchedMovie({movie}){
-  return(
+function WatchedMovie({ movie }) {
+  return (
     <li>
-    <img src={movie.Poster} alt={`${movie.Title} poster`} />
-    <h3>{movie.Title}</h3>
-    <div>
-      <p>
-        <span>⭐️</span>
-        <span>{movie.imdbRating}</span>
-      </p>
-      <p>
-        <span>🌟</span>
-        <span>{movie.userRating}</span>
-      </p>
-      <p>
-        <span>⏳</span>
-        <span>{movie.runtime} min</span>
-      </p>
-    </div>
-  </li>
-  )
+      <img src={movie.Poster} alt={`${movie.Title} poster`} />
+      <h3>{movie.Title}</h3>
+      <div>
+        <p>
+          <span>⭐️</span>
+          <span>{movie.imdbRating}</span>
+        </p>
+        <p>
+          <span>🌟</span>
+          <span>{movie.userRating}</span>
+        </p>
+        <p>
+          <span>⏳</span>
+          <span>{movie.runtime} min</span>
+        </p>
+      </div>
+    </li>
+  );
 }
