@@ -59,15 +59,28 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const tempQuery = "interstellar";
+  const tempQuery = "inception";
+
+  useEffect(() => {
+    console.log("After initial Render");
+  }, []);
+  useEffect(() => {
+    console.log("After every render");
+  });
+  useEffect(() => {
+    console.log("D");
+  }, [query]);
+
+  console.log("During Render");
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         setIsLoading(true);
+        setError('')
         // Fetching Data from API
         const response = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${tempQuery}`
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
         );
 
         // Check if Response is Valid
@@ -87,9 +100,14 @@ export default function App() {
         setIsLoading(false);
       }
     };
+    if(query.length<3){
+      setMovies([])
+      setError("")
+      return;
+    }
 
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
