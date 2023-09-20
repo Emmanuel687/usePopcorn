@@ -56,21 +56,37 @@ export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const query = "avatar";
+  const query = "098k";
 
   useEffect(() => {
     const fetchMovies = async () => {
-      setIsLoading(true);
-      const response = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-      );
-      const data = await response.json();
-
-      setMovies(data.Search);
-      setIsLoading(false);
-      console.log(data.Search);
+      try {
+        setIsLoading(true);
+        // Fetching Data from API
+        const response = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+        );
+        
+        // Check if Response is Valid
+        if (!response.ok) {
+          throw new Error("Something went wrong with fetching Movies");
+        }
+        
+        // Complete Fetched Data in JSON 
+        const data = await response.json();
+        
+        // Check if the data does not Exist
+        if(data.Response==="False") throw Error("Movie not found")
+        setMovies(data.Search);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     fetchMovies();
   }, []);
 
@@ -81,7 +97,12 @@ export default function App() {
         <NumResults movies={movies} />
       </Navbar>
       <Main>
-        <Box>{isLoading ? <Loader />:<MovieList movies={movies} />}a</Box>
+        <Box>
+          {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
+        </Box>
 
         <Box>
           <WatchedSummary watched={watched} />
@@ -92,8 +113,17 @@ export default function App() {
   );
 }
 
-function Loader (){
-  return <p className="loader">Loading...</p>
+function Loader() {
+  return <p className="loader">Loading...</p>;
+}
+
+function ErrorMessage({ message }) {
+  return (
+    <p className="error">
+      <span>⛔</span>
+      {message}
+    </p>
+  );
 }
 function Navbar({ children }) {
   return (
