@@ -277,11 +277,13 @@ function MovieDetails({ selectedId, onClosedMovie }) {
     Runtime: runtime,
     imdbRating,
     Plot: plot,
-    Released:released,
-    Actors:actors,
-    Director:director,
-    Genre:genre
+    Released: released,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
   } = movie;
+  console.log(title, year, poster);
+  // Call Movie API with UseEffect
   useEffect(() => {
     const getMovieDetail = async () => {
       try {
@@ -302,9 +304,24 @@ function MovieDetails({ selectedId, onClosedMovie }) {
   }, []);
   return (
     <div className="details">
-      <button className="btn-back" onClick={onClosedMovie}>
-        &larr;
-      </button>
+      <header>
+        <button className="btn-back" onClick={onClosedMovie}>
+          &larr;
+        </button>
+        <img src={poster} alt={`Poster of ${movie}`} />
+        <div className="details-overview">
+          <h2>{title}</h2>
+          <p>
+            {released} &bull; {runtime}
+          </p>
+          <p>{genre}</p>
+          <p>
+            <span>⭐</span>
+            iMDb rating
+          </p>
+        </div>
+      </header>
+
       {selectedId}
       {}
     </div>
