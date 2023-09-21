@@ -58,8 +58,8 @@ export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
 
-  const tempQuery = "inception";
 
   useEffect(() => {
     console.log("After initial Render");
@@ -77,7 +77,7 @@ export default function App() {
     const fetchMovies = async () => {
       try {
         setIsLoading(true);
-        setError('')
+        setError("");
         // Fetching Data from API
         const response = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
@@ -100,9 +100,9 @@ export default function App() {
         setIsLoading(false);
       }
     };
-    if(query.length<3){
-      setMovies([])
-      setError("")
+    if (query.length < 3) {
+      setMovies([]);
+      setError("");
       return;
     }
 
