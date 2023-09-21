@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import StarRating from "./StarRating";
 import "./index.css";
 
 const tempMovieData = [
@@ -268,7 +269,7 @@ function Movie({ movie, onSelectMovie }) {
 }
 
 function MovieDetails({ selectedId, onClosedMovie }) {
-  const [Loading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState({});
   const {
     Title: title,
@@ -301,29 +302,44 @@ function MovieDetails({ selectedId, onClosedMovie }) {
       }
     };
     getMovieDetail();
-  }, []);
+  }, [selectedId]);
   return (
     <div className="details">
-      <header>
-        <button className="btn-back" onClick={onClosedMovie}>
-          &larr;
-        </button>
-        <img src={poster} alt={`Poster of ${movie}`} />
-        <div className="details-overview">
-          <h2>{title}</h2>
-          <p>
-            {released} &bull; {runtime}
-          </p>
-          <p>{genre}</p>
-          <p>
-            <span>⭐</span>
-            iMDb rating
-          </p>
-        </div>
-      </header>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <header>
+            <button className="btn-back" onClick={onClosedMovie}>
+              &larr;
+            </button>
+            <img src={poster} alt={`Poster of ${movie}`} />
+            <div className="details-overview">
+              <h2>{title}</h2>
+              <p>
+                {released} &bull; {runtime}
+              </p>
+              <p>{genre}</p>
+              <p>
+                <span>⭐</span>
+                {imdbRating}
+                iMDb rating
+              </p>
+            </div>
+          </header>
 
-      {selectedId}
-      {}
+          <section>
+            <div className="rating">
+              <StarRating maxRating={10} size={24} />
+            </div>
+            <p>
+              <em>{plot}</em>
+            </p>
+            <p>{actors}</p>
+            <p>Directed by {director}</p>
+          </section>
+        </>
+      )}
     </div>
   );
 }
