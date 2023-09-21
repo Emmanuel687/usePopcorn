@@ -73,7 +73,7 @@ export default function App() {
   // console.log("During Render");
 
   const handleSelectMovie = (id) => {
-    setSelectedId(selectedId=>selectedId===id?null:id);
+    setSelectedId((selectedId) => (selectedId === id ? null : id));
   };
 
   const handleCloseMovie = () => {
@@ -268,7 +268,47 @@ function Movie({ movie, onSelectMovie }) {
 }
 
 function MovieDetails({ selectedId, onClosedMovie }) {
-  return <div className="details"><button className="btn-back" onClick={onClosedMovie}>&larr;</button>{selectedId}</div>;
+  const [Loading, setIsLoading] = useState(false);
+  const [movie, setMovie] = useState({});
+  const {
+    Title: title,
+    Year: year,
+    Poster: poster,
+    Runtime: runtime,
+    imdbRating,
+    Plot: plot,
+    Released:released,
+    Actors:actors,
+    Director:director,
+    Genre:genre
+  } = movie;
+  useEffect(() => {
+    const getMovieDetail = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+        );
+        if (!response.ok) throw new Error("Something Went Wrong in the serve");
+        const data = await response.json();
+        setMovie(data);
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    getMovieDetail();
+  }, []);
+  return (
+    <div className="details">
+      <button className="btn-back" onClick={onClosedMovie}>
+        &larr;
+      </button>
+      {selectedId}
+      {}
+    </div>
+  );
 }
 
 function WatchedSummary({ watched }) {
