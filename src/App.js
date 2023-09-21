@@ -58,20 +58,20 @@ export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState("tt1375666");
 
 
-  useEffect(() => {
-    console.log("After initial Render");
-  }, []);
-  useEffect(() => {
-    console.log("After every render");
-  });
-  useEffect(() => {
-    console.log("D");
-  }, [query]);
+  // useEffect(() => {
+  //   console.log("After initial Render");
+  // }, []);
+  // useEffect(() => {
+  //   console.log("After every render");
+  // });
+  // useEffect(() => {
+  //   console.log("D");
+  // }, [query]);
 
-  console.log("During Render");
+  // console.log("During Render");
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -247,6 +247,10 @@ function Movie({ movie }) {
       </div>
     </li>
   );
+}
+
+function SelectedMovie({selectedId}){
+  return <div className="details">{selectedId}</div>
 }
 
 function WatchedSummary({ watched }) {
