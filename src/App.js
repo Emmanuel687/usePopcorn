@@ -334,6 +334,13 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
     };
     getMovieDetail();
   }, [selectedId]);
+  useEffect(() => {
+    if (!title) return;
+    document.title = `Movie ${title}`;
+
+    return ()=>document.title='usePopcorn'
+  }, [title]);
+
   return (
     <div className="details">
       {loading ? (
@@ -458,11 +465,13 @@ function WatchedMovie({ movie, onDeleteWatched }) {
           <span>{movie.runtime} min</span>
         </p>
 
-        <button className="btn-delete" onClick={() => onDeleteWatched(movie.imdbID)}>
+        <button
+          className="btn-delete"
+          onClick={() => onDeleteWatched(movie.imdbID)}
+        >
           Delete
         </button>
       </div>
     </li>
   );
 }
-
