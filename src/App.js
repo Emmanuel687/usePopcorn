@@ -88,13 +88,15 @@ export default function App() {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
   useEffect(() => {
+    const controller = new AbortController();
     const fetchMovies = async () => {
       try {
         setIsLoading(true);
         setError("");
         // Fetching Data from API
         const response = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+          { signal: controller.signal }
         );
 
         // Check if Response is Valid
@@ -108,7 +110,11 @@ export default function App() {
         // Check if the data does not Exist
         if (data.Response === "False") throw Error("Movie not found");
         setMovies(data.Search);
+        setError("");
       } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err.message);
+        }
         setError(err.message);
       } finally {
         setIsLoading(false);
@@ -121,6 +127,10 @@ export default function App() {
     }
 
     fetchMovies();
+
+    return () => {
+      controller.abort();
+    };
   }, [query]);
 
   return (
@@ -338,7 +348,7 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
     if (!title) return;
     document.title = `Movie ${title}`;
 
-    return ()=>document.title='usePopcorn'
+    return () => (document.title = "usePopcorn");
   }, [title]);
 
   return (
