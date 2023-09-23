@@ -92,7 +92,6 @@ export default function App() {
     document.addEventListener('keydown',(e)=>{
       if(e.code==='Escape'){
         handleCloseMovie();
-        console.log("Closing")
 
       }
     })
@@ -336,7 +335,6 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
     onAddWatched(newWatchedMovie);
     onClosedMovie();
   }
-  console.log(title, year, poster);
   // Call Movie API with UseEffect
 
   useEffect(() => {
