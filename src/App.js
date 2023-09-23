@@ -87,6 +87,18 @@ export default function App() {
   const handleDeleteWatched = (id) => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
+
+  useEffect(()=>{
+    document.addEventListener('keydown',(e)=>{
+      if(e.code==='Escape'){
+        handleCloseMovie();
+        console.log("Closing")
+
+      }
+    })
+  })
+
+
   useEffect(() => {
     const controller = new AbortController();
     const fetchMovies = async () => {
@@ -326,6 +338,22 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
   }
   console.log(title, year, poster);
   // Call Movie API with UseEffect
+
+  useEffect(() => {
+    function callBack(e) {
+      if (e.code === 'Escape') {
+        onClosedMovie();
+      }
+    }
+  
+    document.addEventListener('keydown', callBack);
+  
+    return function () {
+      document.removeEventListener('keydown', callBack);
+    };
+  }, [onClosedMovie]);
+  
+  
   useEffect(() => {
     const getMovieDetail = async () => {
       try {
