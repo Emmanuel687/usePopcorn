@@ -88,15 +88,13 @@ export default function App() {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
 
-  useEffect(()=>{
-    document.addEventListener('keydown',(e)=>{
-      if(e.code==='Escape'){
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "Escape") {
         handleCloseMovie();
-
       }
-    })
-  })
-
+    });
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -136,7 +134,7 @@ export default function App() {
       setError("");
       return;
     }
-
+    handleCloseMovie();
     fetchMovies();
 
     return () => {
@@ -339,19 +337,18 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
 
   useEffect(() => {
     function callBack(e) {
-      if (e.code === 'Escape') {
+      if (e.code === "Escape") {
         onClosedMovie();
       }
     }
-  
-    document.addEventListener('keydown', callBack);
-  
+
+    document.addEventListener("keydown", callBack);
+
     return function () {
-      document.removeEventListener('keydown', callBack);
+      document.removeEventListener("keydown", callBack);
     };
   }, [onClosedMovie]);
-  
-  
+
   useEffect(() => {
     const getMovieDetail = async () => {
       try {
