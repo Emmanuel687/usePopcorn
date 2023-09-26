@@ -24,6 +24,7 @@ export default function App() {
 
   const handleAddWatched = (movie) => {
     setWatched((watched) => [...watched, movie]);
+    localStorage.setItem('watched',JSON.stringify([...watched, movie]))
   };
   const handleDeleteWatched = (id) => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
@@ -263,13 +264,14 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
   // if (imdbRating > 8) {
   //   [isTop, setIsTop] = useState(true);
   // }
-// const[isTop, setIsTop]=useState(imdbRating>9)
-// console.log(isTop)
+  // const[isTop, setIsTop]=useState(imdbRating>9)
+  // console.log(isTop)
 
-// useEffect(()=>{
-//   setIsTop(imdbRating>8)
-// },[imdbRating])
+  // useEffect(()=>{
+  //   setIsTop(imdbRating>8)
+  // },[imdbRating])
 
+  const [avgRating, setAvgRating] = useState(0);
 
   function handleAdd() {
     const newWatchedMovie = {
@@ -283,7 +285,9 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
       userRating,
     };
     onAddWatched(newWatchedMovie);
-    onClosedMovie();
+    // onClosedMovie();
+    // setAvgRating(+imdbRating);
+    // setAvgRating(avgRating=>(avgRating + userRating) / 2);
   }
   // Call Movie API with UseEffect
 
@@ -350,6 +354,7 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
               </p>
             </div>
           </header>
+          {/* <p>{avgRating}</p> */}
 
           <section>
             <div className="rating">
