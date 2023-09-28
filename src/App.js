@@ -24,12 +24,12 @@ export default function App() {
 
   const handleAddWatched = (movie) => {
     setWatched((watched) => [...watched, movie]);
-    localStorage.setItem('watched',JSON.stringify([...watched, movie]))
+    // localStorage.setItem('watched',JSON.stringify([...watched, movie]))
   };
   const handleDeleteWatched = (id) => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
-
+ useEffect(()=>localStorage.setItem('watched',JSON.stringify(watched)),[watched])
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (e.code === "Escape") {
@@ -162,8 +162,8 @@ function Search({ query, setQuery }) {
 function Logo() {
   return (
     <div className="logo">
-      <span role="img">🍿</span>
-      <h1>usePopcorn</h1>
+      <span role="img">🎥</span>
+      <h1>Movies HD</h1>
     </div>
   );
 }
