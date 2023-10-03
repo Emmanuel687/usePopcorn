@@ -9,10 +9,17 @@ const KEY = "b8a65724";
 export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("tt1375666");
+  // const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(
+    function(){
+      const storedValue = localStorage.getItem('watched')
+      return JSON.parse(storedValue)
+    }
+  );
+
 
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
@@ -29,7 +36,10 @@ export default function App() {
   const handleDeleteWatched = (id) => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
- useEffect(()=>localStorage.setItem('watched',JSON.stringify(watched)),[watched])
+  useEffect(
+    () => localStorage.setItem("watched", JSON.stringify(watched)),
+    [watched]
+  );
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (e.code === "Escape") {
