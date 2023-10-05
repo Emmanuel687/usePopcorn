@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import StarRating from "./StarRating";
 import "./index.css";
 
@@ -13,13 +13,10 @@ export default function App() {
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("tt1375666");
   // const [watched, setWatched] = useState([]);
-  const [watched, setWatched] = useState(
-    function(){
-      const storedValue = localStorage.getItem('watched')
-      return JSON.parse(storedValue)
-    }
-  );
-
+  const [watched, setWatched] = useState(function () {
+    const storedValue = localStorage.getItem("watched");
+    return JSON.parse(storedValue);
+  });
 
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
@@ -157,11 +154,22 @@ function Navbar({ children }) {
 }
 
 function Search({ query, setQuery }) {
-  useEffect(()=>{
-    const el = document.querySelector('.search')
-    console.log(el)
-    el.focus()
-  })
+  // useEffect(()=>{
+  //   const el = document.querySelector('.search')
+  //   console.log(el)
+  //   el.focus()
+  // })
+  const inputEl = useRef(null);
+  useEffect(() => {
+    const callBack = (e) => {
+      if (e.code === "Enter") {
+        inputEl.current.focus();
+      }
+    };
+    document.addEventListener("keydown", callBack);
+
+    return () => document.addEventListener("keydown", callBack);
+  }, []);
   return (
     <>
       <input
@@ -170,6 +178,7 @@ function Search({ query, setQuery }) {
         placeholder="Search movies..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        ref={inputEl}
       />
     </>
   );
