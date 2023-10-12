@@ -1,1 +1,2 @@
-# Project NAm
+# Project Name
+Use Popcorn
