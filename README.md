@@ -10,6 +10,9 @@ The Movie Listing Application is a React-based web application that allows users
 
 -Watchlist: Create a watchlist by selecting movies for future viewing.
 
+# ScreenShot
+![web-screenshot-14-10-2023](https://github.com/Emmanuel687/usePopcorn/assets/93251478/036d0cd1-2ef5-4160-80ab-496de396198d)
+
 # Usage
 Search Movies:
 
