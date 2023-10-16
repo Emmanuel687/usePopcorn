@@ -1,17 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import StarRating from "./StarRating";
 import "./index.css";
+import { useMovies } from "./UseMovies";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const KEY = "b8a65724";
 export default function App() {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState("tt1375666");
+  const {movies,isLoading,error}=useMovies(query)
+  
   // const [watched, setWatched] = useState([]);
   const [watched, setWatched] = useState(function () {
     const storedValue = localStorage.getItem("watched");
@@ -22,7 +21,7 @@ export default function App() {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
   };
 
-  const handleCloseMovie = () => {
+  function handleCloseMovie(){
     setSelectedId(null);
   };
 
@@ -45,51 +44,7 @@ export default function App() {
     });
   });
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchMovies = async () => {
-      try {
-        setIsLoading(true);
-        setError("");
-        // Fetching Data from API
-        const response = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
-          { signal: controller.signal }
-        );
-
-        // Check if Response is Valid
-        if (!response.ok) {
-          throw new Error("Something went wrong with fetching Movies");
-        }
-
-        // Complete Fetched Data in JSON
-        const data = await response.json();
-
-        // Check if the data does not Exist
-        if (data.Response === "False") throw Error("Movie not found");
-        setMovies(data.Search);
-        setError("");
-      } catch (err) {
-        if (err.name !== "AbortError") {
-          setError(err.message);
-        }
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    if (query.length < 3) {
-      setMovies([]);
-      setError("");
-      return;
-    }
-    handleCloseMovie();
-    fetchMovies();
-
-    return () => {
-      controller.abort();
-    };
-  }, [query]);
+ 
 
   return (
     <>
@@ -339,6 +294,8 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
   }, [onClosedMovie]);
 
   useEffect(() => {
+    const KEY = "b8a65724";
+
     const getMovieDetail = async () => {
       try {
         setIsLoading(true);
