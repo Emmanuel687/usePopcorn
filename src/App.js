@@ -109,7 +109,6 @@ function Search({ query, setQuery }) {
     setQuery("");
   });
 
-  
   return (
     <>
       <input
@@ -283,7 +282,7 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
       try {
         setIsLoading(true);
         const response = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
+          `https://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`
         );
         if (!response.ok) throw new Error("Something Went Wrong in the serve");
         const data = await response.json();
