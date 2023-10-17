@@ -11,7 +11,19 @@ The Movie Listing Application is a React-based web application that allows users
 -Watchlist: Create a watchlist by selecting movies for future viewing.
 
 # ScreenShot
-![web-screenshot-17-10-2023](https://github.com/Emmanuel687/usePopcorn/assets/93251478/4768ca21-7ac5-43e2-baec-2eaf784a2568)
+![web-screenshot-17-10-2023](https://github.com/Emmanuel687/usePopcorn/assets/93251478/ef647a10-a3b8-49bb-88c9-c899ab8b8ed9)
+
+# Practise Case
+
+-Using the useEffect Hook to perform asynchronous operations.
+
+-Using the localStorage to save the state of the application.
+
+-Using the useRef hook to manipulate DOM in various intances.
+
+-Creating Custom Hooks in React.
+
+-Managing state of a component.
 
 # Usage
 Search Movies:
@@ -21,7 +33,7 @@ Browse through the search results to find the movie you're interested in.
 
 Rate Movies:
 
-Once you've watched a movie, you can rate it on a scale of 1 to 5 stars.
+Once you've watched a movie, you can rate it on a scale of 1 to 10 stars.
 Your ratings are saved and can be viewed in the "My Ratings" section.
 
 Watchlist:
@@ -41,6 +53,8 @@ If you'd like to contribute to this project, please follow these steps:
 4.Push your changes to your branch on your fork.
 
 5.Create a pull request to the original repository.
+
+
 
 # License
 This project is open-source and available under the MIT License. Feel free to use, modify, and distribute the code as needed.
