@@ -13,6 +13,9 @@ The Movie Listing Application is a React-based web application that allows users
 # ScreenShot
 ![web-screenshot-17-10-2023](https://github.com/Emmanuel687/usePopcorn/assets/93251478/ef647a10-a3b8-49bb-88c9-c899ab8b8ed9)
 
+![web-screenshot-17-10-2023 (1)](https://github.com/Emmanuel687/usePopcorn/assets/93251478/85582904-9d48-400b-8a33-a9d615730278)
+
+
 # Practise Case
 
 -Using the useEffect Hook to perform asynchronous operations.
