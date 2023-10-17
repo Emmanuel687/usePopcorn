@@ -3,6 +3,7 @@ import StarRating from "./StarRating";
 import "./index.css";
 import { useMovies } from "./UseMovies";
 import { useLocalStorageState } from "./UseLocalStorageState";
+import { useKey } from "./Usekey";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -10,18 +11,16 @@ const average = (arr) =>
 export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState("tt1375666");
-  const {movies,isLoading,error}=useMovies(query)
-  const [watched, setWatched] = useLocalStorageState([], "watched")
-
-
+  const { movies, isLoading, error } = useMovies(query);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (selectedId === id ? null : id));
   };
 
-  function handleCloseMovie(){
+  function handleCloseMovie() {
     setSelectedId(null);
-  };
+  }
 
   const handleAddWatched = (movie) => {
     setWatched((watched) => [...watched, movie]);
@@ -30,7 +29,7 @@ export default function App() {
   const handleDeleteWatched = (id) => {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
-  
+
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (e.code === "Escape") {
@@ -38,8 +37,6 @@ export default function App() {
       }
     });
   });
-
- 
 
   return (
     <>
@@ -104,24 +101,15 @@ function Navbar({ children }) {
 }
 
 function Search({ query, setQuery }) {
-  // useEffect(()=>{
-  //   const el = document.querySelector('.search')
-  //   console.log(el)
-  //   el.focus()
-  // })
   const inputEl = useRef(null);
-  useEffect(() => {
-    const callBack = (e) => {
-      if (document.activeElement === inputEl.current) return;
-      if (e.code === "Enter") {
-        inputEl.current.focus();
-        setQuery("");
-      }
-    };
-    document.addEventListener("keydown", callBack);
 
-    return () => document.addEventListener("keydown", callBack);
-  }, [setQuery]);
+  useKey("Enter", function () {
+    if (document.activeElement === inputEl.current) return;
+    inputEl.current.focus();
+    setQuery("");
+  });
+
+  
   return (
     <>
       <input
@@ -265,7 +253,7 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
 
       runtime: Number(runtime.split("").at(0)),
       userRating,
-      countRatingDecisions:countRef.current
+      countRatingDecisions: countRef.current,
     };
     onAddWatched(newWatchedMovie);
     // onClosedMovie();
@@ -273,7 +261,7 @@ function MovieDetails({ selectedId, onClosedMovie, onAddWatched, watched }) {
     // setAvgRating(avgRating=>(avgRating + userRating) / 2);
   }
   // Call Movie API with UseEffect
-
+  useKey("Escape", onClosedMovie);
   useEffect(() => {
     function callBack(e) {
       if (e.code === "Escape") {
