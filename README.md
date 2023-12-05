@@ -8,7 +8,8 @@ The Movie Listing Application is a React-based web application that allows users
 
 -Movie Rating: Users can rate movies they've watched and provide their own reviews.
 
--Watchlist: Create a watchlist by selecting movies for future viewing.
+-Watchlist: Create a watchlist by selecting movies for future viewing
+
 
 # ScreenShot
 ![web-screenshot-17-10-2023](https://github.com/Emmanuel687/usePopcorn/assets/93251478/ef647a10-a3b8-49bb-88c9-c899ab8b8ed9)
