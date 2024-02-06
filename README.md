@@ -1,7 +1,8 @@
 # Movie Listing Application
 
 # Overview
-The Movie Listing Application is a React-based web application that allows users to search for movies, rate them, and select them for watching. This application is designed to provide an interactive and user-friendly platform for movie enthusiasts to discover, rate, and save their favorite movies.
+The Movie Listing Application is a React-based web application that allows users to search for movies, rate them, and select them for watching. 
+This application is designed to provide an interactive and user-friendly platform for movie enthusiasts to discover, rate, and save their favorite movies.
 
 
 # Features
