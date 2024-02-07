@@ -60,6 +60,9 @@ If you'd like to contribute to this project, please follow these steps:-
 
 5.Create a pull request to the original repository.
 
+I 6.Contribute to the project.
+
+
 
 
 # License
