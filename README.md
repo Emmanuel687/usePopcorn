@@ -66,7 +66,8 @@ I 6.Contribute to the project.
 
 
 # License
-This project is open-source and available under the MIT License. Feel free to use, modify, and distribute the code as needed.
+This project is open-source and available under the MIT License. Feel free to use, modify, and distribute the code as needed 2024.
+
 
 # Author
 Emmanuel Kiprotich
